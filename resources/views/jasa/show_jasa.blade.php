@@ -47,10 +47,23 @@
                                                         class="form-control" />
                                                 </div>
 
+
+                                                @error('harga')
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+
                                                 <label>Deskripsi</label>
                                                 <div class="mb-1">
                                                     <input type="text" name="deskripsi" placeholder="Masukkan deskripsi" class="form-control" />
                                                 </div>
+
+                                                @error('deskripsi')
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
 
                                                 <label>Upload Gambar</label>
                                                 <div class="mb-1"">
@@ -81,7 +94,20 @@
                                                 const gambar = document.querySelector('input[name="gambar"]');
                                                 const deskripsi = document.querySelector('textarea[name="deskripsi"]');
                                                 
-                                                if (nama.value === '' || harga.value === '' || kuantitas.value === '' || alamat.value === '' || gambar.value === '' || deskripsi.value === '') {
+                                                 // Check image size
+                                                const MAX_IMAGE_SIZE = 2000000; // maximum image size in bytes
+                                                if (gambar.files.length === 0 || gambar.files[0].size > MAX_IMAGE_SIZE) {
+                                                    event.preventDefault(); // prevent form submission if there are errors
+                                                    swal({
+                                                    title: "Error",
+                                                    text: "Gambar harus diisi dan ukurannya tidak boleh lebih dari 2MB.",
+                                                    type: "error",
+                                                    confirmButtonText: "OK"
+                                                    });
+                                                    return;
+                                                }
+
+                                                if (nama.value === '' || harga.value === '' || gambar.value === '' || deskripsi.value === '') {
                                                     event.preventDefault(); // prevent form submission if there are errors
                                                     swal({
                                                         title: "Error",

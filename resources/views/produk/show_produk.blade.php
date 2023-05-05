@@ -46,10 +46,21 @@
                                                         class="form-control" />
                                                 </div>
 
+                                                @error('harga')
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+
                                                 <label>Jumlah / Kuantitas</label>
                                                 <div class="mb-1">
                                                     <input type="number" name="kuantitas" placeholder="Masukkan Jumlah" class="form-control" />
                                                 </div>
+                                                @error('kuantitas')
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
 
                                                 <label>Kondisi </label>
                                                 <div class="mb-1">
@@ -58,12 +69,22 @@
                                                         <option value="Bekas">Bekas</option>
                                                     </select>
                                                 </div>
+                                                @error('kondisi')
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
 
                                                 <label>Alamat</label>
                                                 <div class="mb-1">
                                                     <input type="text" name="alamat" placeholder="Masukkan Alamat"
                                                         class="form-control" />
                                                 </div>
+                                                @error('alamat')
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
 
                                                 {{-- <label>Provinsi</label>
                                                 <div class="mb-1">
@@ -81,6 +102,11 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                @error('provinsi')
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
 
 
 
@@ -95,10 +121,17 @@
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
+
                                                 <label>Deskripsi</label>
                                                 <div class="mb-1">
                                                     <textarea name="deskripsi" placeholder="Masukkan Deskripsi Produk" class="form-control"></textarea>
                                                 </div>
+
+                                                @error('deskripsi')
+                                                <div class="text-danger mt-1">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
 
                                             </div>
 
@@ -116,10 +149,24 @@
                                                 const harga = document.querySelector('input[name="harga"]');
                                                 const kuantitas = document.querySelector('input[name="kuantitas"]');
                                                 const alamat = document.querySelector('input[name="alamat"]');
+                                                const provinsi =document.querySelector('input[name="provinsi"]');
                                                 const gambar = document.querySelector('input[name="gambar"]');
                                                 const deskripsi = document.querySelector('textarea[name="deskripsi"]');
                                                 
-                                                if (nama.value === '' || harga.value === '' || kuantitas.value === '' || alamat.value === '' || gambar.value === '' || deskripsi.value === '') {
+                                                 // Check image size
+                                                const MAX_IMAGE_SIZE = 2000000; // maximum image size in bytes
+                                                if (gambar.files.length === 0 || gambar.files[0].size > MAX_IMAGE_SIZE) {
+                                                    event.preventDefault(); // prevent form submission if there are errors
+                                                    swal({
+                                                    title: "Error",
+                                                    text: "Gambar harus diisi dan ukurannya tidak boleh lebih dari 2MB.",
+                                                    type: "error",
+                                                    confirmButtonText: "OK"
+                                                    });
+                                                    return;
+                                                }
+
+                                                if (nama.value === '' || harga.value === '' || kuantitas.value === ''|| provinsi.value === '' || alamat.value === '' || gambar.value === '' || deskripsi.value === '') {
                                                     event.preventDefault(); // prevent form submission if there are errors
                                                     swal({
                                                         title: "Error",
@@ -138,6 +185,9 @@
                                                     });
                                                 }
                                             });
+
+
+
 
                                         </script>
                                         
