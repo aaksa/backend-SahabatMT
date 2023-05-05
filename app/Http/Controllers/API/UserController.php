@@ -69,6 +69,12 @@ class UserController extends Controller
                     'email'=> ['required'],
                     'nomor_hp'=> ['required'],
                     'password' => ['required'],
+                    'provinsi' =>['required'],
+                    'kota' => ['required'],
+                    'kecamatan' => ['required'],
+                    'kelurahan' => ['required'],
+                    'jalan' =>['required'],
+                    'alamat_lengkap'=>['required']
                 ],
             );
 
@@ -77,14 +83,19 @@ class UserController extends Controller
                 'email'=>$request->email,
                 'nomor_hp'=>$request->nomor_hp,
                 'password' => Hash::make($request->password),
+                'Provinsi' => $request->provinsi,
+                    'Kota' => $request->kota,
+                    'Kecamatan' => $request->kecamatan,
+                    'Kelurahan' => $request->kelurahan,
+                    'Jalan' =>$request->jalan,
+                    'alamat_lengkap'=>$request->alamat_lengkap
             ]);
-
 
             $user = User::where('email', $request->email)->first();
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
-            return ResponseFormatter::success(['access_token' => $tokenResult, 'token_type' => 'Bearer', $user], 'Data berhasil dibuat');
+            return ResponseFormatter::success(['access_token' => $tokenResult, 'token_type' => 'Bearer','user' => $user], 'Data berhasil dibuat');
         } catch (\Exception $error) {
             return ResponseFormatter::error(['message' => 'something went wrong', 'error' => $error], "Data gagal ditambahkan", '500');
         }

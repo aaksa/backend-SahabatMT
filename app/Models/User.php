@@ -22,6 +22,12 @@ class User extends Authenticatable
         'nomor_hp',
         'email',
         'password',
+        'Provinsi',
+        'Kota',
+        'Kecamatan',
+        'Kelurahan',
+        'Jalan',
+        'alamat_lengkap'
     ];
 
     /**

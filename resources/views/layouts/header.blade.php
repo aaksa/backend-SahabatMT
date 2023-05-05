@@ -105,11 +105,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="javascript:;" class="nav-link">
-                  <i data-feather="log-out"></i>
-                  <span>Log Out</span>
-                </a>
-              </li>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="">
+                        <i data-feather="log-out"></i>
+                        <span>Log Out</span>
+                    </button>
+                </form>
+            </li>
+            
             </ul>
           </div>
         </div>

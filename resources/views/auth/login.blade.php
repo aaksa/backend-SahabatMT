@@ -9,7 +9,7 @@
       <div class="card">
         <div class="row">
           <div class="col-md-4 pr-md-0">
-            <div class="auth-left-wrapper" style="background-image: url({{ url('https://via.placeholder.com/219x452') }})">
+            <div class="auth-left-wrapper" style="background-image: url({{ url('https://media.istockphoto.com/id/1208084866/photo/repairer-repairing-air-conditioner.jpg?s=612x612&w=0&k=20&c=00hNJXuEwsv6xJ-2uE_NlJA_jjDFWeA0beHK6A9xpOs=') }})">
 
             </div>
           </div>
@@ -44,10 +44,10 @@
                     Remember me
                   </label>
                 </div>
-                <button class="mt-3">Login</button>
-                <div class="mt-3">
-                  <a href="{{ url('/') }}" class="btn btn-primary mr-2 mb-2 mb-md-0">Login</a>
-                </div>
+                <button class="btn btn-primary mr-2 mb-2 mb-md-0">Login</button>
+                {{-- <div class="mt-3">
+                  <a href="{{ url('/') }}" class="">Login</a>
+                </div> --}}
 
               </form>
 

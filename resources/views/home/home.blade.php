@@ -21,7 +21,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">Kustomer Baru</h6>
+              <h6 class="card-title mb-0">Kustomer</h6>
               <div class="dropdown mb-2">
                 <button class="btn p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -37,7 +37,7 @@
             </div>
             <div class="row">
               <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">97</h3>
+                <h3 class="mb-2">{{ $userCount }}</h3>
                 <div class="d-flex align-items-baseline">
                   <p class="text-success">
                     <span>+3.3%</span>
@@ -73,7 +73,7 @@
             </div>
             <div class="row">
               <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">34</h3>
+                <h3 class="mb-2">{{ $requestCount }}</h3>
                 <div class="d-flex align-items-baseline">
                   <p class="text-danger">
                     <span>-2.8%</span>

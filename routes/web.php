@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function(){
 
     Route::put('/request/{id}',[RequestController::class, 'onclickrequest'])->name('onclick-request');
     Route::delete('/request/{id}',[RequestController::class, 'deleteRequest'])->name('delete-request');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
     // Route::put('/request/reject/{id}',[RequestController::class, 'rejectRequest'])->name('reject-request');
 

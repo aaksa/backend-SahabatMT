@@ -10,8 +10,6 @@ class Request extends Model
     use HasFactory;
 
 
-
-
     protected $fillable = [
         'nama',
         'user_id',
