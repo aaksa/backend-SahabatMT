@@ -16,6 +16,12 @@ class HomeController extends Controller
         $userCount = User::count();
         $requestCount = ModelsRequest::count();
 
-        return view('home.home', compact('data','userCount','requestCount'));
+        $previousCustomers = 1;
+
+        $growthPercentage = (($userCount - $previousCustomers) / $previousCustomers) * 1;
+        $growthPercentageFormatted = number_format($growthPercentage, 2, '.', '');
+
+
+        return view('home.home', compact('data','userCount','requestCount' , 'growthPercentageFormatted'));
     }
 }

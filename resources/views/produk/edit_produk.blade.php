@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-12 col-12">
                                     <div class="mb-1">
                                         <label class="form-label" for="provinsi">Provinsi</label>
@@ -99,10 +99,10 @@
                                     </div>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             
                             
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-12 col-12">
                                     <div class="mb-1">
                                         <label class="form-label" for="alamat">Alamat</label>
@@ -115,7 +115,7 @@
                                     </div>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             
                             <div class="row">
                                 <div class="col-md-12 col-12">

@@ -40,7 +40,7 @@
                 <h3 class="mb-2">{{ $userCount }}</h3>
                 <div class="d-flex align-items-baseline">
                   <p class="text-success">
-                    <span>+3.3%</span>
+                    <span>%</span>
                     <i data-feather="arrow-up" class="icon-sm mb-1"></i>
                   </p>
                 </div>
@@ -57,7 +57,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">Orderan</h6>
+              <h6 class="card-title mb-0">Request Penjualan AC</h6>
               <div class="dropdown mb-2">
                 <button class="btn p-0" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -75,9 +75,9 @@
               <div class="col-6 col-md-12 col-xl-5">
                 <h3 class="mb-2">{{ $requestCount }}</h3>
                 <div class="d-flex align-items-baseline">
-                  <p class="text-danger">
-                    <span>-2.8%</span>
-                    <i data-feather="arrow-down" class="icon-sm mb-1"></i>
+                  <p class="text-success">
+                    <span>%</span>
+                    <i data-feather="arrow-up" class="icon-sm mb-1"></i>
                   </p>
                 </div>
               </div>
@@ -93,7 +93,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">Pertumbuhan Request Customer</h6>
+              <h6 class="card-title mb-0">Pertumbuhan Customer</h6>
               <div class="dropdown mb-2">
                 <button class="btn p-0" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -109,10 +109,10 @@
             </div>
             <div class="row">
               <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">89.87%</h3>
+                <h3 class="mb-2">{{$growthPercentageFormatted}}%</h3>
                 <div class="d-flex align-items-baseline">
                   <p class="text-success">
-                    <span>+2.8%</span>
+                    <span>%</span>
                     <i data-feather="arrow-up" class="icon-sm mb-1"></i>
                   </p>
                 </div>

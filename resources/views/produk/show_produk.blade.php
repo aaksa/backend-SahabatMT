@@ -75,7 +75,7 @@
                                                 </div>
                                                 @enderror
 
-                                                <label>Alamat</label>
+                                                {{-- <label>Alamat</label>
                                                 <div class="mb-1">
                                                     <input type="text" name="alamat" placeholder="Masukkan Alamat"
                                                         class="form-control" />
@@ -84,7 +84,7 @@
                                                 <div class="text-danger mt-1">
                                                     {{ $message }}
                                                 </div>
-                                                @enderror
+                                                @enderror --}}
 
                                                 {{-- <label>Provinsi</label>
                                                 <div class="mb-1">
@@ -93,7 +93,7 @@
                                                 </div> --}}
                                                 {{-- select and search provinve  --}}
 
-                                                <label>Provinsi</label>
+                                                {{-- <label>Provinsi</label>
                                                 <div class="mb-1">
                                                     <select class="form-select search-select" name="provinsi" id="provinsi">
                                                         <option value="">Pilih Provinsi</option>
@@ -106,7 +106,7 @@
                                                 <div class="text-danger mt-1">
                                                     {{ $message }}
                                                 </div>
-                                                @enderror
+                                                @enderror --}}
 
 
 
@@ -166,7 +166,7 @@
                                                     return;
                                                 }
 
-                                                if (nama.value === '' || harga.value === '' || kuantitas.value === ''|| provinsi.value === '' || alamat.value === '' || gambar.value === '' || deskripsi.value === '') {
+                                                if (nama.value === '' || harga.value === '' || kuantitas.value === '' || gambar.value === '' || deskripsi.value === '') {
                                                     event.preventDefault(); // prevent form submission if there are errors
                                                     swal({
                                                         title: "Error",
@@ -206,8 +206,6 @@
                                     <th>Harga</th>
                                     <th>Kondisi</th>
                                     <th>Kuantitas</th>
-                                    <th>Provinsi</th>
-                                    <th>Alamat</th>
                                     <th>Deskripsi</th>
                                     <th>Actions</th>
                                 </tr>
@@ -231,8 +229,6 @@
                                         </td>
                                         
                                         <td class="text-center">{{ $data->kuantitas }}</td>
-                                        <td>{{ $data->provinsi }}</td>
-                                        <td>{{ $data->alamat }}</td>
                                         <td><div style="white-space: pre-wrap">{{ wordwrap(Str::limit($data->deskripsi, 100), 50, "\n", true) }}</div></td>
 
                                         {{-- <td>{{ wordwrap(Str::limit( $data->deskripsi, 100), 5, "\n", true) }}</td> --}}

@@ -73,55 +73,108 @@ class paymentController extends Controller
 
 public function payProduk(Request $request)
 {
-    $params = array(
-        'transaction_details' => array(
+
+    // $items = $request->input('items');
+
+    // foreach ($items as $item) {
+    //     $listAttribute = $item['produk'];
+    //     // do something with the attributes
+    //     $item_detail = array(
+    //         'id' => $listAttribute['id'],
+    //         'price' => $listAttribute['harga'],
+    //         'quantity' => $listAttribute['kuantitas'],
+    //         'name' => $listAttribute['nama']
+    //     );
+    //     array_push($item_details, $item_detail);
+    // }
+    // $item_details = array();
+    
+    // foreach ($items as $item) {
+    //     $item_detail = array(
+    //         'id' => $item['id'],
+    //         'price' => $item['harga'],
+    //         'quantity' => $item['kuantitas'],
+    //         'name' => $item['nama_barang']
+    //     );
+    //     array_push($item_details, $item_detail);
+    // }
+
+    // $params = array(
+
+    //     'transaction_details' => array(
+    //         'order_id' => rand(),
+    //         'gross_amount' => $request->input('gross_amount'),
+    //     ),
+
+    //     'customer_details' => array(
+    //         'last_name' => $request->input('name'),
+    //         'email' => $request->input('email'),
+    //         'phone' => $request->input('phone'),
+    //         'billing_address' => array(
+    //             'first_name' => 'Budi',
+    //             'last_name' => 'Susanto',
+    //             'email' => 'budisusanto@example.com',
+    //             'phone' => '08123456789',
+    //             'address' => 'Sudirman No.12',
+    //             'city' => 'Jakarta',
+    //             'postal_code' => '12190',
+    //             'country_code' => 'IDN',
+    //         ),
+    //     ),
+        
+    //     'item_details' => $item_details,
+    //     // 'item_details' => array(
+    //     //     array(
+    //     //         'id' => rand(),
+    //     //         'price' => $request->input('harga'),
+    //     //         'quantity' => $request->input('kuantitas'),
+    //     //         'name' => $request->input('nama_barang'),
+    //     //     ),
+    //     // ),
+
+    // 'quantity' => $item['quantity']['kuantitas'],
+
+
+    // );
+
+    $items = $request->input('items');
+    $item_details = [];
+
+    foreach ($items as $item) {
+        $item_detail = [
+            'id' => $item['produk']['id'],
+            'price' => $item['produk']['harga'],
+            'quantity' => $item['quantity'],
+            'name' => $item['produk']['nama'],
+        ];
+        array_push($item_details, $item_detail);
+    }
+
+    $params = [
+        'transaction_details' => [
             'order_id' => rand(),
             'gross_amount' => $request->input('gross_amount'),
-        ),
+        ],
 
-
-        'customer_details' => array(
+        'customer_details' => [
             'last_name' => $request->input('name'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
-            'billing_address' => array(
-                'first_name' => 'Budi',
-                'last_name' => 'Susanto',
-                'email' => 'budisusanto@example.com',
-                'phone' => '08123456789',
-                'address' => 'Sudirman No.12',
-                'city' => 'Jakarta',
-                'postal_code' => '12190',
+            'billing_address' => [
+                'first_name' => '',
+                'last_name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'address' => $request->input('address'),
+                'city' => $request->input('city'),
+                'postal_code' => '90111',
                 'country_code' => 'IDN',
-            ),
-
+            ],
+        ],
         
+        'item_details' => $item_details,
+    ];
 
-
-        ),
-
-        'item_details' => array(
-            array(
-                'id' => rand(),
-                'price' => $request->input('harga'),
-                'quantity' => $request->input('kuantitas'),
-                'name' => $request->input('nama_barang'),
-            ),
-            // array(
-            //     'id' => 'b02',
-            //     'price' => 3000,
-            //     'quantity' => 2,
-            //     'name' => 'Orange',
-            // ),
-        ),
-
-        // 'item_details' => array(
-        //     'name' => $request->input('nama_barang'),
-        //     'quantity' => $request->input('kuantitas'),
-        //     'price' => $request->input('harga')
-        // ),
-        
-    );
 
     // $params = array(
     //     'transaction_details' => array(

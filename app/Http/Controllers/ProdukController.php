@@ -49,9 +49,9 @@ class ProdukController extends Controller
     );
 
     public function showProduk(){
-        $provinces = $this->provinces;
+        // $provinces = $this->provinces;
         $Produksi = Produk::all();
-        return view('produk.show_produk' ,compact('Produksi', 'provinces') );
+        return view('produk.show_produk' ,compact('Produksi') );
     }
 
     public function storeProduk(Request $request){
@@ -88,8 +88,8 @@ class ProdukController extends Controller
             }],
             'kuantitas' => ['required'],
             'kondisi' => ['required'],
-            'provinsi' => ['required'],
-            'alamat' => ['required'],
+            // 'provinsi' => ['required'],
+            // 'alamat' => ['required'],
             'deskripsi' => ['required']
         ]);
 
@@ -111,8 +111,8 @@ class ProdukController extends Controller
                    'gambar' => $thumbnailUrl,
                    'kuantitas'=>$request->kuantitas,
                    'kondisi'=>$request->kondisi,
-                   'provinsi'=>$request->provinsi,
-                   'alamat'=>$request->alamat,
+                //    'provinsi'=>$request->provinsi,
+                //    'alamat'=>$request->alamat,
                    'deskripsi'=>$request->deskripsi
                ]);
 
@@ -141,8 +141,8 @@ class ProdukController extends Controller
             'harga' =>['required'],
             'kuantitas'=> ['required'],
             'kondisi'=>['required'],
-            'provinsi'=>['required'],
-            'alamat'=>['required'],
+            // 'provinsi'=>['required'],
+            // 'alamat'=>['required'],
             'deskripsi'=>['required']
         ]);
 
@@ -151,8 +151,8 @@ class ProdukController extends Controller
                 'harga'=> $request->harga,
                 'kuantitas'=>$request->kuantitas,
                 'kondisi'=>$request->kondisi,
-                'provinsi'=>$request->provinsi,
-                'alamat'=>$request->alamat,
+                // 'provinsi'=>$request->provinsi,
+                // 'alamat'=>$request->alamat,
                 'deskripsi'=>$request->deskripsi
         ]);
 

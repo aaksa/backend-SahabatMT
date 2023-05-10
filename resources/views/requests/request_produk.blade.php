@@ -74,12 +74,15 @@
                                     <th>Provinsi</th>
                                     <th>Alamat</th>
                                     <th>Deskripsi</th>
+                                    <th>Nomor Hp</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
 
                             <tbody >
                                 @foreach ($datas as $data)
+                                    @foreach ($users as $user )
+                                        
                                     <tr>
                                         <td>
                                             <img style="width: 150px; height:100px; border-radius :0"  src="{{asset($data->takeImage())}}" class="me-75" alt="Produk" width="200px">
@@ -97,6 +100,8 @@
                                         <td>{{ $data->provinsi }}</td>
                                         <td>{{ $data->alamat }}</td>
                                         <td><div style="white-space: pre-wrap">{{ wordwrap(Str::limit($data->deskripsi, 100), 50, "\n", true) }}</div></td>
+                                        <td>{{ $user->nomor_hp }}</td>
+
 
                                     
                                         {{-- <td>
@@ -188,6 +193,7 @@
                               
 
                                     </tr>
+                                    @endforeach
                                 @endforeach
                             </tbody>
 

@@ -23,7 +23,8 @@
     },
     "autoload": {
         "files": [
-                "app/helpers/helpers.php"
+                "app/helpers/helpers.php",
+                "app/helpers/ResponseFormatter.php"
         ],
         
         "psr-4": {
