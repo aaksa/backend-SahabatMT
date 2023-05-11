@@ -150,6 +150,14 @@ public function payProduk(Request $request)
         array_push($item_details, $item_detail);
     }
 
+    $discount_detail = [
+        'id' => 'D01',
+        'name' => 'Ongkos Kirim',
+        'price' => $request->input('ongkir'),
+        'quantity' => 1,
+    ];
+    array_push($item_details, $discount_detail);
+
     $params = [
         'transaction_details' => [
             'order_id' => rand(),

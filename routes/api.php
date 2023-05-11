@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\API\ProdakController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\paymentController;
 use App\Http\Controllers\ProdukController;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [UserController::class, 'register']);
 
 Route::post('login', [UserController::class, 'login']);
+Route::post('forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.reset');
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -19,6 +22,7 @@ Route::post('login', [UserController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('user',[UserController::class, 'fetch']);
+    Route::put('users/{id}' ,[UserController::class, 'update'])->name('users.update');
     Route::get('logout', [UserController::class, 'logout']);
     Route::get('produk', [ProdakController::class, 'semua']);
     Route::get('jasa', [ProdakController::class, 'semuajasa']);
@@ -26,4 +30,5 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('logout', [UserController::class,'logout']);
     Route::post('pay',[paymentController::class,'payProduk'] ); 
     Route::get('rekuest/{user_id}', [ProdakController::class,'rekuest']);
+    Route::get('article', [ArtikelController::class, 'fetchArtikel']);
 });

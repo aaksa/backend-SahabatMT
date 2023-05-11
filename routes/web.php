@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JasaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\TestingMailTrap;
 use App\Models\Jasa;
 use App\Models\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +39,17 @@ Route::middleware('auth')->group(function(){
     Route::get('/request/accepted' , [RequestController::class, 'showaccepted'])->name('show-request-acc');
     Route::get('/request/rejected' , [RequestController::class, 'showrejected'])->name('show-request-dec');
 
+
+    Route::get('/artikel', [ArtikelController::class, 'showArtikel'])->name('show-artikel');
+    Route::post('/artikel', [ArtikelController::class,'createArtikel'])->name('create-article');
+    Route::post('/artikel/{id}/edit', [ArtikelController::class,'editArtikel'])->name('edit-article');
+    Route::delete('/artikel/{id}', [ArtikelController::class,'deleteArtikel'])->name('delete-article');
+    
+
+
     Route::put('/request/{id}',[RequestController::class, 'onclickrequest'])->name('onclick-request');
     Route::delete('/request/{id}',[RequestController::class, 'deleteRequest'])->name('delete-request');
+
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
@@ -65,6 +76,10 @@ Route::any('/{page?}',function(){
     return View::make('error.404');
 })->where('page','.*');
 
+
+// Testing
+
+Route::get('/testing-email',[TestingMailTrap::class, 'index']);
 
 
 

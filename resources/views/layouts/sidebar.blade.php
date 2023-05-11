@@ -314,6 +314,16 @@
           <span class="link-title">Request Penjualan</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        {{-- <a href="https://www.nobleui.com/laravel/documentation/docs.html" target="_blank" class="nav-link"> --}}
+          <a href="{{ url('/artikel') }}" class="nav-link {{ active_class(['/artikel']) }}">
+          <i class="link-icon" data-feather="book"></i>
+          <span class="link-title">Artikel</span>
+        </a>
+      </li>
+
+
     </ul>
   </div>
 </nav>

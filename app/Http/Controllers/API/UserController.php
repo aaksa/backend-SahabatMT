@@ -60,6 +60,11 @@ class UserController extends Controller
     }
 
 
+    //newLogin
+
+    
+
+
     public function register(Request $request)
     {
         try {
@@ -96,7 +101,7 @@ class UserController extends Controller
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
             return ResponseFormatter::success(['access_token' => $tokenResult, 'token_type' => 'Bearer','user' => $user], 'Data berhasil dibuat');
-        } catch (\Exception $error) {
+        } catch (Exception $error) {
             return ResponseFormatter::error(['message' => 'something went wrong', 'error' => $error], "Data gagal ditambahkan", '500');
         }
 
@@ -113,6 +118,60 @@ class UserController extends Controller
 
         return ResponseFormatter::success($token, 'Token Revoked');
     }
+
+    // public function updateProfile(Request $request)
+    // {
+    //     // $user = $request->user(); // Get the authenticated user
+    //     $user = Auth::user();
+    //     try {
+    //         // Validate the request data
+    //         $request->validate([
+    //             'nama' => ['required'],
+    //             'nomor_hp' => ['required'],
+    //         ]);
+    
+    //         // Update the user's nama and nomor_hp attributes
+    //         User::where('id', $user->id)->update([
+    //             'nama' => $request->nama,
+    //             'nomor_hp' => $request->nomor_hp,
+    //         ]);
+    
+    //         // Get the updated user record
+    //         $updatedUser = User::find($user->id);
+    
+    //         return ResponseFormatter::success([
+    //             'user' => $updatedUser,
+    //         ], 'Profile updated successfully');
+    //     } catch (\Exception $error) {
+    //         return ResponseFormatter::error([
+    //             'message' => 'Something went wrong',
+    //             'error' => $error,
+    //         ], 'Update failed', 500);
+    //     }
+    // }
+
+    public function update(Request $request, $id)
+{
+    // Validate the request data
+    $request->validate([
+        'nama' => ['required'],
+        'nomor_hp' => ['required'],
+    ]);
+
+    // Get the user record to be updated
+    $user = User::findOrFail($id);
+
+    // Update the user's nama and nomor_hp attributes
+    $user->nama = $request->nama;
+    $user->nomor_hp = $request->nomor_hp;
+    $user->save();
+
+    return ResponseFormatter::success([
+        'user' => $user,
+    ], 'Profile updated successfully');
+}
+
+    
 
 
 
