@@ -323,6 +323,14 @@
         </a>
       </li>
 
+      <li class="nav-item">
+        {{-- <a href="https://www.nobleui.com/laravel/documentation/docs.html" target="_blank" class="nav-link"> --}}
+          <a href="{{ url('/transaction') }}" class="nav-link {{ active_class(['/transaction']) }}">
+          <i class="link-icon" data-feather="shopping-cart"></i>
+          <span class="link-title">Transaksi</span>
+        </a>
+      </li>
+
 
     </ul>
   </div>

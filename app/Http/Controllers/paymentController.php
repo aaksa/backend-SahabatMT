@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PaymentItem;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 // Set your Merchant Server Key
@@ -73,69 +75,17 @@ class paymentController extends Controller
 
 public function payProduk(Request $request)
 {
-
-    // $items = $request->input('items');
-
-    // foreach ($items as $item) {
-    //     $listAttribute = $item['produk'];
-    //     // do something with the attributes
-    //     $item_detail = array(
-    //         'id' => $listAttribute['id'],
-    //         'price' => $listAttribute['harga'],
-    //         'quantity' => $listAttribute['kuantitas'],
-    //         'name' => $listAttribute['nama']
-    //     );
-    //     array_push($item_details, $item_detail);
-    // }
-    // $item_details = array();
-    
-    // foreach ($items as $item) {
-    //     $item_detail = array(
-    //         'id' => $item['id'],
-    //         'price' => $item['harga'],
-    //         'quantity' => $item['kuantitas'],
-    //         'name' => $item['nama_barang']
-    //     );
-    //     array_push($item_details, $item_detail);
-    // }
-
-    // $params = array(
-
-    //     'transaction_details' => array(
-    //         'order_id' => rand(),
-    //         'gross_amount' => $request->input('gross_amount'),
-    //     ),
-
-    //     'customer_details' => array(
-    //         'last_name' => $request->input('name'),
-    //         'email' => $request->input('email'),
-    //         'phone' => $request->input('phone'),
-    //         'billing_address' => array(
-    //             'first_name' => 'Budi',
-    //             'last_name' => 'Susanto',
-    //             'email' => 'budisusanto@example.com',
-    //             'phone' => '08123456789',
-    //             'address' => 'Sudirman No.12',
-    //             'city' => 'Jakarta',
-    //             'postal_code' => '12190',
-    //             'country_code' => 'IDN',
-    //         ),
-    //     ),
-        
-    //     'item_details' => $item_details,
-    //     // 'item_details' => array(
-    //     //     array(
-    //     //         'id' => rand(),
-    //     //         'price' => $request->input('harga'),
-    //     //         'quantity' => $request->input('kuantitas'),
-    //     //         'name' => $request->input('nama_barang'),
-    //     //     ),
-    //     // ),
-
-    // 'quantity' => $item['quantity']['kuantitas'],
+    // $validator = Validator::make($request->all(), [
+    //     'items' => 'required|array',
+    //     'gross_amount' => 'required|numeric',
+    //     'name' => 'required|string',
+    //     'email' => 'required|email',
+    //     'phone' => 'required|string',
+    //     'address' => 'required|string',
+    //     'city' => 'required|string',
+    // ]);
 
 
-    // );
 
     $items = $request->input('items');
     $item_details = [];
@@ -150,12 +100,22 @@ public function payProduk(Request $request)
         array_push($item_details, $item_detail);
     }
 
+    //-----------------------------------------------------
+    // for my own backend
+
+ 
+
+    //end
+    //-------------------------------------------------------------------------
+
+
     $discount_detail = [
         'id' => 'D01',
         'name' => 'Ongkos Kirim',
         'price' => $request->input('ongkir'),
         'quantity' => 1,
     ];
+
     array_push($item_details, $discount_detail);
 
     $params = [
@@ -163,7 +123,6 @@ public function payProduk(Request $request)
             'order_id' => rand(),
             'gross_amount' => $request->input('gross_amount'),
         ],
-
         'customer_details' => [
             'last_name' => $request->input('name'),
             'email' => $request->input('email'),
@@ -233,7 +192,8 @@ public function payProduk(Request $request)
     //         ),
     //     ),
     // );
-    
+
+    $this->createRiwayat($request);
 
     // Get Snap token and redirect URL
     $snapToken = \Midtrans\Snap::getSnapToken($params);
@@ -248,6 +208,52 @@ public function payProduk(Request $request)
     // Return response as JSON
     return response()->json($response);
 }
+
+
+
+public function createRiwayat(Request $request){
+
+    $items = $request->input('items');
+    $gross_amount = $request->input('gross_amount');
+    $name = $request->input('name');
+    $email = $request->input('email');
+    $phone = $request->input('phone');
+    $address = $request->input('address');
+    
+    // create the transaction record
+    $transaction = Transaction::create([
+        'gross_amount' => $gross_amount,
+        'customer_name' => $name,
+        'customer_email' => $email,
+        'customer_phone' => $phone,
+        'address' => $address,
+    ]);
+    
+    // create the payment items records
+    foreach ($items as $item) {
+        PaymentItem::create([
+            'payment_id' => $transaction->id, // Add this line
+            'product_id' => $item['produk']['id'],
+            'product_name' => $item['produk']['nama'],
+            'product_price' => $item['produk']['harga'],
+            'quantity' => $item['quantity'],
+        ]);
+
+        // $paymentItem = new PaymentItem([
+        //     'payment_id' => 1, // Add this line
+        //     'product_id' => $item['produk']['id'],
+        //     'product_name' => $item['produk']['nama'],
+        //     'product_price' => $item['produk']['harga'],
+        //     'quantity' => $item['quantity'],
+        // ]);
+        // $transaction->items()->save($paymentItem);
+    }
+    // return the transaction object
+   
+}
+
+
+
 
 
 }

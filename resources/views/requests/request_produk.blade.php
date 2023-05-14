@@ -101,31 +101,7 @@
                                         <td>{{ $data->alamat }}</td>
                                         <td><div style="white-space: pre-wrap">{{ wordwrap(Str::limit($data->deskripsi, 100), 50, "\n", true) }}</div></td>
                                         <td>{{ $user->nomor_hp }}</td>
-
-
-                                    
-                                        {{-- <td>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <form action="{{ route('onclick-request', ['id' => $data->id]) }}" method="POST" style="display: inline;">
-                                                    @method('put')
-                                                    @csrf
-                                                    <input type="hidden" name="pengajuan" value="accepted">
-                                                    <button type="submit" class="btn btn-sm btn-success">
-                                                        <span>Accept</span>
-                                                    </button>
-                                                </form>
-                                                
-                                                <form action="{{ route('onclick-request', ['id' => $data->id]) }}" method="POST" style="display: inline;">
-                                                    @method('put')
-                                                    @csrf
-                                                    <input type="hidden" name="pengajuan" value="rejected">
-                                                    <button type="submit" class="btn btn-sm btn-danger">
-                                                        <span>Reject</span>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td> --}}
-                                        
+           
                                         <td>
                                             @if($data->pengajuan == 'accepted' || $data->pengajuan == 'rejected')
                                                 <div class="btn-group" role="group" aria-label="Basic example">
@@ -159,37 +135,6 @@
                                                 </div>
                                             @endif
                                         </td>
-                                        
-
-                          
-                                        
-                                        {{-- <td>
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow"
-                                                    data-bs-toggle="dropdown">
-                                                    <i data-feather="more-vertical"></i>
-                                                </button>
-
-                                                <div class="dropdown-menu">
-
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('edit-produk', ['id' => $data->id]) }}">
-                                                        <i data-feather="edit-2" class="me-50"></i>
-                                                        <span>Accept</span>
-                                                    </a>
-
-                                                    
-                                                    <form action="{{ route('delete-produk' , ['id' =>$data->id])}}" method="POST">
-                                                        @method('delete')
-                                                        @csrf
-                                                        <button class="dropdown-item" type="submit">
-                                                            <i data-feather="trash" class="me-50"></i>
-                                                            <span>Reject</span>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td> --}}
                               
 
                                     </tr>

@@ -7,6 +7,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\paymentController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('logout', [UserController::class,'logout']);
     Route::post('pay',[paymentController::class,'payProduk'] ); 
     Route::get('rekuest/{user_id}', [ProdakController::class,'rekuest']);
+    Route::get('transaction/{email}', [TransactionController::class,'getTransactionuser']);
     Route::get('article', [ArtikelController::class, 'fetchArtikel']);
 });

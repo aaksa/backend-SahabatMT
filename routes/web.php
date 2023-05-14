@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\TestingMailTrap;
+use App\Http\Controllers\TransactionController;
 use App\Models\Jasa;
 use App\Models\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,16 @@ Route::middleware('auth')->group(function(){
     Route::delete('/request/{id}',[RequestController::class, 'deleteRequest'])->name('delete-request');
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+    Route::get('/transaction' , [TransactionController::class, 'showTransaction'])->name('show-transaction');
+
+    Route::get('/transaction/accepted' , [TransactionController::class, 'showaccepted'])->name('show-Transaction-acc');
+    Route::get('/transaction/rejected' , [TransactionController::class, 'showrejected'])->name('show-Transaction-dec');
+    Route::get('/transaction/refunded' , [TransactionController::class, 'showrefunded'])->name('show-Transaction-ref');
+
+    Route::put('/transaction/{id}',[TransactionController::class, 'onclickTransaction'])->name('onclick-Transaction');
+    Route::delete('/transaction/{id}',[TransactionController::class, 'deleteTransaction'])->name('delete-Transaction');
 
 
     // Route::put('/request/reject/{id}',[RequestController::class, 'rejectRequest'])->name('reject-request');

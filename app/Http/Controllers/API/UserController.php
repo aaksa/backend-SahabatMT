@@ -16,53 +16,90 @@ class UserController extends Controller
     //
 
 
+    // public function login(Request $request)
+    // {
+
+    //     try {
+    //         $request->validate(
+    //             [
+    //                 'email' => 'required',
+    //                 'password' => 'required'
+    //             ]
+    //         );
+    //         $credentials = request([
+    //             'email',
+    //             'password'
+    //         ]);
+
+    //         if (!Auth::attempt($credentials)) {
+    //             return ResponseFormatter::error([
+    //                 'massage' => 'Unauthorized'
+    //             ], 'Authentication Failed', 500);
+    //         }
+
+    //         $user = User::where('email', $request->email)->first();
+
+    //         if (!Hash::check($request->password, $user->password, [])) {
+    //             throw new Exception('Invalid Credentials');
+    //         }
+
+    //         $tokenResult = $user->createToken('authToken')->plainTextToken;
+
+    //         return ResponseFormatter::success([
+    //             'access_token' => $tokenResult,
+    //             'tokenType' => 'Bearer',
+    //             'user' => $user
+    //         ], 'Authenticated');
+
+    //     } catch (Exception $error) {
+    //         return ResponseFormatter::error([
+    //             'massage' => 'Something went wrong',
+    //             'error' => $error,
+    //         ], 'Authentication Failed', 500);
+    //     }
+    // }
+
     public function login(Request $request)
-    {
+{
+    try {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
 
-        try {
-            $request->validate(
-                [
-                    'email' => 'required',
-                    'password' => 'required'
-                ]
-            );
-            $credentials = request([
-                'email',
-                'password'
-            ]);
+        $type = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'nomor_hp';
 
-            if (!Auth::attempt($credentials)) {
-                return ResponseFormatter::error([
-                    'massage' => 'Unauthorized'
-                ], 'Authentication Failed', 500);
-            }
-
+        $user = null;
+        if ($type === 'email') {
             $user = User::where('email', $request->email)->first();
-
-            if (!Hash::check($request->password, $user->password, [])) {
-                throw new Exception('Invalid Credentials');
-            }
-
-            $tokenResult = $user->createToken('authToken')->plainTextToken;
-
-            return ResponseFormatter::success([
-                'access_token' => $tokenResult,
-                'tokenType' => 'Bearer',
-                'user' => $user
-            ], 'Authenticated');
-
-        } catch (Exception $error) {
-            return ResponseFormatter::error([
-                'massage' => 'Something went wrong',
-                'error' => $error,
-            ], 'Authentication Failed', 500);
+        } else if ($type === 'nomor_hp') {
+            $user = User::where('nomor_hp', $request->email)->first();
         }
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return ResponseFormatter::error([
+                'message' => 'Invalid email/phone or password'
+            ], 'Authentication Failed', 401);
+        }
+
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
+
+        return ResponseFormatter::success([
+            'access_token' => $tokenResult,
+            'tokenType' => 'Bearer',
+            'user' => $user
+        ], 'Authenticated');
+
+    } catch (Exception $error) {
+        return ResponseFormatter::error([
+            'message' => 'Something went wrong',
+            'error' => $error,
+        ], 'Authentication Failed', 500);
     }
+}
 
 
     //newLogin
-
-    
 
 
     public function register(Request $request)
