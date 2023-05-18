@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentItem;
+use App\Models\Produk;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 // Set your Merchant Server Key
-\Midtrans\Config::$serverKey = 'SB-Mid-server-CQL5NRb_IwzlkRKI-6FNPc1_';
+\Midtrans\Config::$serverKey = 'Mid-server-IImGgjrLtnePkOvxnLKMQS6X';
 // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-\Midtrans\Config::$isProduction = false;
+\Midtrans\Config::$isProduction = true;
 // Set sanitization on (default)
 \Midtrans\Config::$isSanitized = true;
 // Set 3DS transaction for credit card to true
@@ -75,18 +76,6 @@ class paymentController extends Controller
 
 public function payProduk(Request $request)
 {
-    // $validator = Validator::make($request->all(), [
-    //     'items' => 'required|array',
-    //     'gross_amount' => 'required|numeric',
-    //     'name' => 'required|string',
-    //     'email' => 'required|email',
-    //     'phone' => 'required|string',
-    //     'address' => 'required|string',
-    //     'city' => 'required|string',
-    // ]);
-
-
-
     $items = $request->input('items');
     $item_details = [];
 
@@ -100,15 +89,6 @@ public function payProduk(Request $request)
         array_push($item_details, $item_detail);
     }
 
-    //-----------------------------------------------------
-    // for my own backend
-
- 
-
-    //end
-    //-------------------------------------------------------------------------
-
-
     $discount_detail = [
         'id' => 'D01',
         'name' => 'Ongkos Kirim',
@@ -118,9 +98,12 @@ public function payProduk(Request $request)
 
     array_push($item_details, $discount_detail);
 
+        // Generate a unique order ID
+    $order_id = rand();
+
     $params = [
         'transaction_details' => [
-            'order_id' => rand(),
+            'order_id' => $order_id,
             'gross_amount' => $request->input('gross_amount'),
         ],
         'customer_details' => [
@@ -142,67 +125,16 @@ public function payProduk(Request $request)
         'item_details' => $item_details,
     ];
 
-
-    // $params = array(
-    //     'transaction_details' => array(
-    //         'order_id' => 'CustOrder-' . rand(),
-    //         'gross_amount' => 13000,
-    //     ),
-    //     'credit_card' => array(
-    //         'secure' => true,
-    //     ),
-    //     'item_details' => array(
-    //         array(
-    //             'id' => 'a01',
-    //             'price' => 7000,
-    //             'quantity' => 1,
-    //             'name' => 'Apple',
-    //         ),
-    //         array(
-    //             'id' => 'b02',
-    //             'price' => 3000,
-    //             'quantity' => 2,
-    //             'name' => 'Orange',
-    //         ),
-    //     ),
-    //     'customer_details' => array(
-    //         'first_name' => 'Budi',
-    //         'last_name' => 'Susanto',
-    //         'email' => 'budisusanto@example.com',
-    //         'phone' => '+628123456789',
-    //         'billing_address' => array(
-    //             'first_name' => 'Budi',
-    //             'last_name' => 'Susanto',
-    //             'email' => 'budisusanto@example.com',
-    //             'phone' => '08123456789',
-    //             'address' => 'Sudirman No.12',
-    //             'city' => 'Jakarta',
-    //             'postal_code' => '12190',
-    //             'country_code' => 'IDN',
-    //         ),
-    //         'shipping_address' => array(
-    //             'first_name' => 'Budi',
-    //             'last_name' => 'Susanto',
-    //             'email' => 'budisusanto@example.com',
-    //             'phone' => '0812345678910',
-    //             'address' => 'Sudirman',
-    //             'city' => 'Jakarta',
-    //             'postal_code' => '12190',
-    //             'country_code' => 'IDN',
-    //         ),
-    //     ),
-    // );
-
-    $this->createRiwayat($request);
-
+    // $this->createRiwayat($request);
     // Get Snap token and redirect URL
     $snapToken = \Midtrans\Snap::getSnapToken($params);
     $redirectUrl = \Midtrans\Snap::getSnapUrl($params);
-
+    
     // Create response array with Snap token and redirect URL
     $response = array(
         'snap_token' => $snapToken,
-        'redirect_url' => $redirectUrl
+        'redirect_url' => $redirectUrl,
+        'order_id' => $order_id,
     );
 
     // Return response as JSON
@@ -228,9 +160,10 @@ public function createRiwayat(Request $request){
         'customer_phone' => $phone,
         'address' => $address,
     ]);
-    
+
     // create the payment items records
     foreach ($items as $item) {
+        $product = Produk::find($item['produk']['id']);
         PaymentItem::create([
             'payment_id' => $transaction->id, // Add this line
             'product_id' => $item['produk']['id'],
@@ -238,22 +171,21 @@ public function createRiwayat(Request $request){
             'product_price' => $item['produk']['harga'],
             'quantity' => $item['quantity'],
         ]);
+        $newQuantity = $product->kuantitas - $item['quantity'];
+        $product->update(['kuantitas' => $newQuantity]);
 
-        // $paymentItem = new PaymentItem([
-        //     'payment_id' => 1, // Add this line
-        //     'product_id' => $item['produk']['id'],
-        //     'product_name' => $item['produk']['nama'],
-        //     'product_price' => $item['produk']['harga'],
-        //     'quantity' => $item['quantity'],
-        // ]);
-        // $transaction->items()->save($paymentItem);
-    }
-    // return the transaction object
-   
+    }   // return the transaction object
 }
 
-
-
-
-
+public function handlePaymentCallback(Request $request)
+{
+    $transactionStatus = $request->input('transaction_status');
+    if ($transactionStatus == 'capture') {
+        dd($transactionStatus);
+        return response()->json(['status' => 'success']);
+    } else {
+        dd($transactionStatus);
+        return response()->json(['status' => 'error']);
+    }
+}
 }

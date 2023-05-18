@@ -58,17 +58,11 @@
                                             <span>Refunded</span>
                                         </button>
                                     </form>
-
                                 </div>
                             </div>
-                            
-                    
-                            
-
                             {{--  --}}
                           </div>
-                          
-
+                        
                     </div>
                     <div class="table-responsive">
                         <table class="table">
@@ -85,7 +79,7 @@
 
                             <tbody >
                                 @foreach ($datas as $data)
-                                    @foreach ($users as $user )
+                                   
                                         
                                     <tr>
                                         <td><div style="white-space: pre-wrap">{{ wordwrap(Str::limit($data->customer_name, 100), 30, "\n", true) }}</div></td>
@@ -227,7 +221,7 @@
                                     </tr>
                                 </div>
 
-                                    @endforeach
+                                
                                 @endforeach
                             </tbody>
 

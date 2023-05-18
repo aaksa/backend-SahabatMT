@@ -14,7 +14,8 @@ class ProdakController extends Controller
     //
 
     public function semua(){
-       $produks =  Produk::all();
+    //    $produks =  Produk::all();
+    $produks = Produk::where('kuantitas', '>', 0)->get();
 
        if($produks){
         return ResponseFormatter::success($produks, 'Data Berhasil Diambil');

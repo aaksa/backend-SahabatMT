@@ -16,6 +16,7 @@ Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 Route::post('forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.reset');
 
+Route::get('paycall',[paymentController::class, 'handlePaymentCallback']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('upload', [ProdakController::class,'upload']);
     Route::get('logout', [UserController::class,'logout']);
     Route::post('pay',[paymentController::class,'payProduk'] ); 
+    Route::post('transaksi',[paymentController::class,'createRiwayat']);
     Route::get('rekuest/{user_id}', [ProdakController::class,'rekuest']);
     Route::get('transaction/{email}', [TransactionController::class,'getTransactionuser']);
     Route::get('article', [ArtikelController::class, 'fetchArtikel']);
